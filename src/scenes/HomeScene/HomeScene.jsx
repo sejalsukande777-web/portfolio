@@ -569,7 +569,7 @@ export default function PixelWorldScaffold() {
 
         /* Mobile: shorter world, scaled-down sprites, bigger tap targets */
         @media (max-width: 560px) {
-          .pw-root { --gh: 120px; --s: 0.7; height: 400px; border-radius: 8px; border-width: 3px; }
+          .pw-root { --gh: 140px; --s: 0.7; height: calc(100svh - 150px); min-height: 440px; max-height: 720px; border-radius: 8px; border-width: 3px; } .project-object-img { transform: scale(0.72); transform-origin: bottom left; }
           .dialogue-box { left: 12px; right: 12px; padding: 10px 12px; bottom: 10px; }
           .dialogue-box p { font-size: 11px; margin-bottom: 8px; }
           .dialogue-actions { gap: 6px; }
@@ -577,7 +577,7 @@ export default function PixelWorldScaffold() {
         }
 
         @media (max-width: 380px) {
-          .pw-root { --gh: 100px; --s: 0.6; height: 340px; }
+          .pw-root { --gh: 120px; --s: 0.6; height: calc(100svh - 140px); min-height: 400px; }
         }
       `}</style>
 

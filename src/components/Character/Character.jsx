@@ -30,14 +30,14 @@ export default function Character({ x, facing, isWalking }) {
       <style>{`
         .pw-character {
           position: absolute;
-          bottom: 130px;
+          bottom: calc(var(--gh, 190px) - 60px * var(--s, 1));
           transform-origin: bottom center;
           z-index: 5;
         }
         .pw-character-sprite {
           display: block;
-          width: 56px;
-          height: 56px;
+          width: calc(56px * var(--s, 1));
+          height: calc(56px * var(--s, 1));
           image-rendering: pixelated;
           image-rendering: crisp-edges;
         }
