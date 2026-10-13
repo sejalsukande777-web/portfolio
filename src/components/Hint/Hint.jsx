@@ -40,6 +40,7 @@ export default function Hint({ text = "!", variant = "object", delay = 0 }) {
           transform: translateX(-50%);
           clip-path: polygon(0 0, 100% 0, 100% 50%, 75% 50%, 75% 100%, 25% 100%, 25% 50%, 0 50%);
         }
+        .project-object[style*="left: 56.1%"] { z-index: 9 !important; }
         .hint-object { top: -16px; padding: 3px 5px; font-size: 8px; }
         .hint-house  { top: -24px; padding: 4px 7px; font-size: 8px; letter-spacing: 1px; background: #FFE9A0; }
         .hint-robot {

@@ -233,6 +233,7 @@ export default function HouseInterior({ onExit }) {
           z-index: 90;
           padding: 20px;
         }
+        @media (max-width: 700px) { .interior-backdrop { background: #1B1F3B; padding: 10px; } }
         .interior-room {
           width: min(96%, 900px);
           background: #F4E3C1;
