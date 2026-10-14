@@ -124,16 +124,16 @@ const STAGES = [
   {
     id: "night",
     label: "Night",
-    sky: ["#1B1A4B", "#3A2A7A", "#9A4C8C"],
+    sky: ["#17164A", "#4A2F8A", "#C2609A"],
     sunY: 16,
     sunX: 72,
     sunColor: "#FFF6D9",
     haloColor: "#DCE0FF",
-    cloudTint: "#5C5A8C",
+    cloudTint: "#7B6BA8",
     groundTop: "#3E6E58",
     groundBottom: "#20402F",
     showMoon: true,
-    showStars: 60,
+    showStars: 140,
     windowGlow: 1,
   },
 ];
@@ -164,9 +164,12 @@ const sparkGrid = (n) =>
 const SPARK_M = sparkGrid(3);
 const SPARK_L = sparkGrid(5);
 
+const SPARK_S = sparkGrid(2);
+
 function Star({ x, y, delay, color }) {
-  const kind = delay % 10 === 0 ? "L" : delay % 5 === 0 ? "M" : "d";
+  const kind = delay % 29 === 0 ? "L" : delay % 17 === 0 ? "M" : delay % 11 === 0 ? "S" : "d";
   const dur = 2.6 + (delay % 4);
+  const bright = 0.35 + (((delay * 37) % 10) / 10) * 0.55;
   return (
     <div
       className="pw-star"
@@ -180,35 +183,34 @@ function Star({ x, y, delay, color }) {
       {kind === "d" ? (
         <div
           style={{
-            width: delay % 3 === 0 ? 2 : 3,
-            height: delay % 3 === 0 ? 2 : 3,
+            width: delay % 7 === 0 ? 3 : 2,
+            height: delay % 7 === 0 ? 3 : 2,
             background: delay % 4 === 0 ? "#CFC8FF" : delay % 2 ? "#FFFDF7" : color,
-            opacity: 0.55 + (delay % 4) * 0.15,
-            boxShadow: "0 0 4px rgba(255, 243, 200, 0.85)",
+            opacity: bright,
+            boxShadow: "0 0 3px rgba(255, 243, 200, 0.7)",
           }}
         />
       ) : (
         <div
-          className="pw-spark"
           style={{
             animation: `sparkPulse ${dur}s ease-in-out infinite`,
             animationDelay: `${(delay % 5) * 0.5}s`,
-            filter: "drop-shadow(0 0 4px rgba(255, 243, 200, 0.95))",
+            filter: "drop-shadow(0 0 3px rgba(255, 243, 200, 0.9))",
           }}
         >
           <PixelSprite
-            grid={kind === "L" ? SPARK_L : SPARK_M}
+            grid={kind === "L" ? SPARK_L : kind === "M" ? SPARK_M : SPARK_S}
             colorMap={{ o: "#FFFFFF", a: color, b: "#B9B3E8" }}
-            pixelSize={kind === "L" ? 3 : 2}
+            pixelSize={2}
           />
         </div>
       )}
       <style>{`
         @keyframes sparkPulse {
-          0%, 100% { transform: scale(0.8); opacity: 0.75; }
+          0%, 100% { transform: scale(0.8); opacity: 0.6; }
           50% { transform: scale(1.15); opacity: 1; }
         }
-        .celestial { filter: drop-shadow(0 0 10px rgba(255, 246, 217, 0.8)) drop-shadow(0 0 26px rgba(220, 224, 255, 0.55)); }
+        .celestial { filter: drop-shadow(0 0 14px rgba(255, 246, 217, 0.9)) drop-shadow(0 0 40px rgba(220, 224, 255, 0.6)); }
       `}</style>
     </div>
   );
