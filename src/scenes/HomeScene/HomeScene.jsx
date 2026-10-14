@@ -150,18 +150,18 @@ function useBlendedStage(index) {
   return STAGES[index];
 }
 
-const sparkGrid = (n) =>
-  Array.from({ length: n * 2 + 1 }, (_, y) =>
+const sparkGrid = (n) => {
+  const T = Math.pow(n, 0.75) + 0.1;
+  return Array.from({ length: n * 2 + 1 }, (_, y) =>
     Array.from({ length: n * 2 + 1 }, (_, x) => {
       const dx = Math.abs(x - n);
       const dy = Math.abs(y - n);
-      if (dx === 0 && dy === 0) return "o";
-      if (dx === 0 || dy === 0) return dx + dy <= Math.ceil(n / 2) ? "a" : "b";
-      if (dx === 1 && dy === 1 && n >= 3) return "b";
-      return ".";
+      if (Math.pow(dx, 0.75) + Math.pow(dy, 0.75) > T) return ".";
+      const d = dx + dy;
+      return d <= 1 ? "o" : d <= Math.ceil(n / 2) ? "a" : "b";
     }).join("")
   );
-const SPARK_M = sparkGrid(3);
+};const SPARK_M = sparkGrid(3);
 const SPARK_L = sparkGrid(5);
 
 const SPARK_S = sparkGrid(2);
