@@ -124,7 +124,7 @@ const STAGES = [
   {
     id: "night",
     label: "Night",
-    sky: ["#1B1F3B", "#2B2F5C", "#4B3F72"],
+    sky: ["#1B1A4B", "#3A2A7A", "#9A4C8C"],
     sunY: 16,
     sunX: 72,
     sunColor: "#FFF6D9",
@@ -150,9 +150,23 @@ function useBlendedStage(index) {
   return STAGES[index];
 }
 
+const sparkGrid = (n) =>
+  Array.from({ length: n * 2 + 1 }, (_, y) =>
+    Array.from({ length: n * 2 + 1 }, (_, x) => {
+      const dx = Math.abs(x - n);
+      const dy = Math.abs(y - n);
+      if (dx === 0 && dy === 0) return "o";
+      if (dx === 0 || dy === 0) return dx + dy <= Math.ceil(n / 2) ? "a" : "b";
+      if (dx === 1 && dy === 1 && n >= 3) return "b";
+      return ".";
+    }).join("")
+  );
+const SPARK_M = sparkGrid(3);
+const SPARK_L = sparkGrid(5);
+
 function Star({ x, y, delay, color }) {
-  const sparkle = delay % 5 === 0;
-  const tiny = delay % 3 === 0;
+  const kind = delay % 10 === 0 ? "L" : delay % 5 === 0 ? "M" : "d";
+  const dur = 2.6 + (delay % 4);
   return (
     <div
       className="pw-star"
@@ -163,17 +177,39 @@ function Star({ x, y, delay, color }) {
         animationDelay: `${(delay % 7) * 0.4}s`,
       }}
     >
-      {sparkle ? (
-        <PixelSprite grid={BIG_STAR} colorMap={{ "#": color, o: "#FFFFFF" }} pixelSize={3} />
-      ) : (
+      {kind === "d" ? (
         <div
           style={{
-            width: tiny ? 2 : 3,
-            height: tiny ? 2 : 3,
-            background: delay % 2 ? "#FFFDF7" : color,
+            width: delay % 3 === 0 ? 2 : 3,
+            height: delay % 3 === 0 ? 2 : 3,
+            background: delay % 4 === 0 ? "#CFC8FF" : delay % 2 ? "#FFFDF7" : color,
+            opacity: 0.55 + (delay % 4) * 0.15,
+            boxShadow: "0 0 4px rgba(255, 243, 200, 0.85)",
           }}
         />
+      ) : (
+        <div
+          className="pw-spark"
+          style={{
+            animation: `sparkPulse ${dur}s ease-in-out infinite`,
+            animationDelay: `${(delay % 5) * 0.5}s`,
+            filter: "drop-shadow(0 0 4px rgba(255, 243, 200, 0.95))",
+          }}
+        >
+          <PixelSprite
+            grid={kind === "L" ? SPARK_L : SPARK_M}
+            colorMap={{ o: "#FFFFFF", a: color, b: "#B9B3E8" }}
+            pixelSize={kind === "L" ? 3 : 2}
+          />
+        </div>
       )}
+      <style>{`
+        @keyframes sparkPulse {
+          0%, 100% { transform: scale(0.8); opacity: 0.75; }
+          50% { transform: scale(1.15); opacity: 1; }
+        }
+        .celestial { filter: drop-shadow(0 0 10px rgba(255, 246, 217, 0.8)) drop-shadow(0 0 26px rgba(220, 224, 255, 0.55)); }
+      `}</style>
     </div>
   );
 }
