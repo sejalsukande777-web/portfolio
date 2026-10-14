@@ -126,7 +126,7 @@ export default function HouseInterior({ onExit }) {
       transition={{ duration: 0.3 }}
     >
       <motion.div
-        className="interior-room" ref={(el) => { if (el && !el.dataset.c) { el.dataset.c = "1"; el.scrollLeft = (el.scrollWidth - el.clientWidth) * 0.3; } }}
+        className="interior-room"
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.96 }}
@@ -233,7 +233,7 @@ export default function HouseInterior({ onExit }) {
           z-index: 90;
           padding: 20px;
         }
-        @media (max-width: 700px) { .interior-backdrop { background: #1B1F3B; padding: 10px; } .interior-room { overflow-x: auto; overflow-y: hidden; max-height: calc(100svh - 20px); -webkit-overflow-scrolling: touch; } .interior-header { position: sticky; left: 0; } .interior-room .room-scaler-outer { width: 190%; } }
+        @media (max-width: 700px) { .interior-backdrop { background: #1B1F3B; padding: 10px; } }
         .interior-room {
           width: min(96%, 900px);
           background: #F4E3C1;
