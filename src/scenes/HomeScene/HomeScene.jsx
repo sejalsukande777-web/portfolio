@@ -167,7 +167,7 @@ const SPARK_L = sparkGrid(5);
 const SPARK_S = sparkGrid(2);
 
 function Star({ x, y, delay, color }) {
-  const kind = delay === 20 || delay === 77 ? "L" : delay === 8 || delay === 41 || delay === 63 || delay === 99 ? "M" : "d";
+  const kind = "d";
   const dur = 2.6 + (delay % 4);
   const bright = 0.35 + (((delay * 37) % 10) / 10) * 0.55;
   return (
