@@ -133,7 +133,7 @@ const STAGES = [
     groundTop: "#3E6E58",
     groundBottom: "#20402F",
     showMoon: true,
-    showStars: 140,
+    showStars: 110,
     windowGlow: 1,
   },
 ];
@@ -167,7 +167,7 @@ const SPARK_L = sparkGrid(5);
 const SPARK_S = sparkGrid(2);
 
 function Star({ x, y, delay, color }) {
-  const kind = delay % 29 === 0 ? "L" : delay % 17 === 0 ? "M" : delay % 11 === 0 ? "S" : "d";
+  const kind = delay === 20 || delay === 77 ? "L" : delay === 8 || delay === 41 || delay === 63 || delay === 99 ? "M" : "d";
   const dur = 2.6 + (delay % 4);
   const bright = 0.35 + (((delay * 37) % 10) / 10) * 0.55;
   return (
@@ -187,7 +187,7 @@ function Star({ x, y, delay, color }) {
             height: delay % 7 === 0 ? 3 : 2,
             background: delay % 4 === 0 ? "#CFC8FF" : delay % 2 ? "#FFFDF7" : color,
             opacity: bright,
-            boxShadow: "0 0 3px rgba(255, 243, 200, 0.7)",
+            boxShadow: "0 0 2px rgba(255, 243, 200, 0.5)",
           }}
         />
       ) : (
